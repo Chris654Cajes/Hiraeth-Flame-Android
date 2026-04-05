@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.HiraethFlame" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/purple_accent</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorSurface">@color/black_surface</item>
+        <item name="android:colorBackground">@color/black_primary</item>
+        <item name="android:statusBarColor">@color/black_primary</item>
+        <item name="android:navigationBarColor">@color/black_primary</item>
+    </style>
+</resources>

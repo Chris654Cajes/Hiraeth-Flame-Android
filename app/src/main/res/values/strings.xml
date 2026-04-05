@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Hiraeth Flame</string>
+    <string name="nav_library">Library</string>
+    <string name="nav_camera">Camera</string>
+    <string name="nav_albums">Albums</string>
+</resources>

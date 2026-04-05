@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/libraryFragment">
+
+    <fragment
+        android:id="@+id/libraryFragment"
+        android:name="com.hiraeth.flame.ui.library.LibraryFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_library">
+        <action
+            android:id="@+id/action_library_to_detail"
+            app:destination="@id/mediaDetailFragment" />
+        <action
+            android:id="@+id/action_library_to_import"
+            app:destination="@id/importFragment" />
+        <action
+            android:id="@+id/action_library_to_reel"
+            app:destination="@id/reelFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="com.hiraeth.flame.ui.camera.CameraFragment"
+        android:label="@string/nav_camera"
+        tools:layout="@layout/fragment_camera" />
+
+    <fragment
+        android:id="@+id/albumsFragment"
+        android:name="com.hiraeth.flame.ui.albums.AlbumsFragment"
+        android:label="@string/nav_albums"
+        tools:layout="@layout/fragment_albums">
+        <action
+            android:id="@+id/action_albums_to_detail"
+            app:destination="@id/mediaDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/importFragment"
+        android:name="com.hiraeth.flame.ui.mediaimport.ImportFragment"
+        android:label="Import"
+        tools:layout="@layout/fragment_import">
+        <action
+            android:id="@+id/action_import_to_detail"
+            app:destination="@id/mediaDetailFragment"
+            app:popUpTo="@id/importFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mediaDetailFragment"
+        android:name="com.hiraeth.flame.ui.detail.MediaDetailFragment"
+        android:label="Details"
+        tools:layout="@layout/fragment_media_detail">
+        <argument
+            android:name="mediaId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_detail_to_imageEditor"
+            app:destination="@id/imageEditorFragment" />
+        <action
+            android:id="@+id/action_detail_to_videoEditor"
+            app:destination="@id/videoEditorFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/imageEditorFragment"
+        android:name="com.hiraeth.flame.ui.editor.ImageEditorFragment"
+        android:label="Image editor"
+        tools:layout="@layout/fragment_image_editor">
+        <argument
+            android:name="mediaId"
+            app:argType="long" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/videoEditorFragment"
+        android:name="com.hiraeth.flame.ui.editor.VideoEditorFragment"
+        android:label="Video tools"
+        tools:layout="@layout/fragment_video_editor">
+        <argument
+            android:name="mediaId"
+            app:argType="long" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/reelFragment"
+        android:name="com.hiraeth.flame.ui.reel.ReelStudioFragment"
+        android:label="Reel studio"
+        tools:layout="@layout/fragment_reel">
+        <action
+            android:id="@+id/action_reel_to_detail"
+            app:destination="@id/mediaDetailFragment" />
+    </fragment>
+</navigation>
