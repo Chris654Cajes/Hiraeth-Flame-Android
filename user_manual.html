@@ -1,0 +1,2030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hiraeth Flame - User Manual</title>
+    <style>
+        /* ============================================
+           CSS VARIABLES - App Color Palette
+           ============================================ */
+        :root {
+            --purple-accent: #9900FF;
+            --black-primary: #0A0A0A;
+            --black-surface: #121212;
+            --text-primary: #F5F5F5;
+            --divider-dark: #2A2A2A;
+            --text-secondary: #B0B0B0;
+            --text-muted: #888888;
+            --error-color: #CF6679;
+        }
+
+        /* ============================================
+           RESET & BASE STYLES
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, sans-serif;
+            background-color: var(--black-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ============================================
+           TYPOGRAPHY
+           ============================================ */
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--text-primary);
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 1.75rem; margin-top: 2rem; }
+        h3 { font-size: 1.25rem; margin-top: 1.5rem; }
+        h4 { font-size: 1rem; margin-top: 1rem; }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        a {
+            color: var(--purple-accent);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: #bb33ff;
+        }
+
+        /* ============================================
+           LAYOUT
+           ============================================ */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ============================================
+           HEADER / NAVIGATION
+           ============================================ */
+        header {
+            background-color: var(--black-surface);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--divider-dark);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            display: block;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: background-color 0.2s ease;
+        }
+
+        nav a:hover {
+            background-color: var(--divider-dark);
+        }
+
+        /* Mobile menu toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* ============================================
+           HERO SECTION
+           ============================================ */
+        .hero {
+            text-align: center;
+            padding: 4rem 1rem;
+            background: linear-gradient(135deg, var(--black-primary) 0%, var(--black-surface) 100%);
+        }
+
+        .hero-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--purple-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--black-surface);
+            border: 1px solid var(--divider-dark);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .badge svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--purple-accent);
+        }
+
+        /* ============================================
+           TABLE OF CONTENTS
+           ============================================ */
+        .toc {
+            background-color: var(--black-surface);
+            border: 1px solid var(--divider-dark);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem auto;
+            max-width: 800px;
+        }
+
+        .toc h2 {
+            margin-top: 0;
+            font-size: 1.25rem;
+        }
+
+        .toc ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .toc li {
+            padding: 0.25rem 0;
+        }
+
+        .toc a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: background-color 0.2s ease;
+        }
+
+        .toc a:hover {
+            background-color: var(--divider-dark);
+        }
+
+        .toc-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background-color: var(--purple-accent);
+            color: white;
+            border-radius: 50%;
+            font-size: 0.75rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        /* ============================================
+           MAIN CONTENT SECTIONS
+           ============================================ */
+        main {
+            padding: 2rem 0 4rem;
+        }
+
+        section {
+            margin-bottom: 3rem;
+            scroll-margin-top: 80px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--divider-dark);
+        }
+
+        .section-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--black-surface);
+            border: 1px solid var(--divider-dark);
+            border-radius: 12px;
+            flex-shrink: 0;
+        }
+
+        .section-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--purple-accent);
+        }
+
+        .section-header h2 {
+            margin-top: 0;
+        }
+
+        /* ============================================
+           PHONE MOCKUP / SCREENSHOT CONTAINER
+           ============================================ */
+        .phone-mockup {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .phone {
+            width: 320px;
+            background-color: var(--black-primary);
+            border: 3px solid var(--divider-dark);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--divider-dark);
+        }
+
+        .phone-status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 16px;
+            background-color: var(--black-primary);
+            font-size: 0.7rem;
+            color: var(--text-primary);
+        }
+
+        .phone-toolbar {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background-color: var(--black-surface);
+            border-bottom: 1px solid var(--divider-dark);
+        }
+
+        .phone-toolbar .back-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 12px;
+            fill: var(--text-primary);
+        }
+
+        .phone-toolbar .title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .phone-content {
+            padding: 16px;
+            min-height: 400px;
+        }
+
+        .phone-bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            background-color: var(--black-surface);
+            border-top: 1px solid var(--divider-dark);
+        }
+
+        .phone-bottom-nav .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 12px;
+            font-size: 0.65rem;
+            color: var(--purple-accent);
+        }
+
+        .phone-bottom-nav .nav-item svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--purple-accent);
+        }
+
+        /* ============================================
+           SCREENSHOT SPECIFIC STYLES
+           ============================================ */
+        .screenshot-label {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.75rem;
+            font-style: italic;
+        }
+
+        /* Library Screen */
+        .mock-search {
+            background-color: var(--black-primary);
+            border: 1px solid var(--divider-dark);
+            border-radius: 8px;
+            padding: 10px 12px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+        }
+
+        .mock-filters {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+
+        .mock-filter-btn {
+            padding: 6px 14px;
+            background-color: var(--black-surface);
+            border: 1px solid var(--divider-dark);
+            border-radius: 16px;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+        }
+
+        .mock-filter-btn.active {
+            background-color: rgba(153, 0, 255, 0.2);
+            border-color: var(--purple-accent);
+            color: var(--purple-accent);
+        }
+
+        .mock-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .mock-card {
+            background-color: var(--black-surface);
+            border: 1px solid var(--divider-dark);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .mock-card-thumb {
+            height: 60px;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mock-card-thumb svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--text-muted);
+        }
+
+        .mock-card-info {
+            padding: 6px 8px;
+        }
+
+        .mock-card-title {
+            font-size: 0.65rem;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .mock-card-subtitle {
+            font-size: 0.6rem;
+            color: var(--purple-accent);
+        }
+
+        .mock-fab {
+            position: relative;
+            margin-top: 12px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .mock-fab-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: var(--purple-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(153, 0, 255, 0.4);
+        }
+
+        .mock-fab-btn svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        /* Camera Screen */
+        .mock-camera-preview {
+            height: 200px;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a2e, #0a0a0a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            border-radius: 8px;
+        }
+
+        .mock-camera-preview svg {
+            width: 48px;
+            height: 48px;
+            fill: var(--text-muted);
+            opacity: 0.5;
+        }
+
+        .mock-camera-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .mock-btn {
+            flex: 1;
+            padding: 12px;
+            background-color: var(--purple-accent);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .mock-btn.secondary {
+            background-color: var(--black-surface);
+            border: 1px solid var(--divider-dark);
+            color: var(--text-primary);
+        }
+
+        /* Editor Screens */
+        .mock-editor-preview {
+            height: 160px;
+            background-color: var(--black-surface);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+
+        .mock-editor-preview svg {
+            width: 40px;
+            height: 40px;
+            fill: var(--text-muted);
+        }
+
+        .mock-seekbar {
+            margin-bottom: 12px;
+        }
+
+        .mock-seekbar-label {
+            font-size: 0.75rem;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .mock-seekbar-track {
+            height: 4px;
+            background-color: var(--divider-dark);
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .mock-seekbar-fill {
+            height: 100%;
+            background-color: var(--purple-accent);
+            border-radius: 2px;
+            width: 60%;
+        }
+
+        .mock-seekbar-thumb {
+            width: 16px;
+            height: 16px;
+            background-color: var(--purple-accent);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 60%;
+            transform: translate(-50%, -50%);
+        }
+
+        .mock-editor-buttons {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+
+        .mock-btn-small {
+            padding: 8px 12px;
+            background-color: var(--black-surface);
+            border: 1px solid var(--divider-dark);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.75rem;
+        }
+
+        .mock-status {
+            font-size: 0.7rem;
+            color: var(--purple-accent);
+            margin-top: 8px;
+        }
+
+        /* Detail Screen */
+        .mock-detail-preview {
+            height: 120px;
+            background-color: var(--black-surface);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+
+        .mock-detail-preview svg {
+            width: 40px;
+            height: 40px;
+            fill: var(--text-muted);
+        }
+
+        .mock-input-field {
+            background-color: var(--black-primary);
+            border: 1px solid var(--divider-dark);
+            border-radius: 6px;
+            padding: 8px 10px;
+            margin-bottom: 8px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .mock-input-label {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+        }
+
+        /* Albums Screen */
+        .mock-album-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .mock-album-card {
+            background-color: var(--black-surface);
+            border: 1px solid var(--divider-dark);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .mock-album-thumb {
+            height: 50px;
+            background: linear-gradient(135deg, #1a1a2e, #2d1b4e);
+            border-radius: 6px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mock-album-thumb svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--purple-accent);
+        }
+
+        .mock-album-name {
+            font-size: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .mock-album-count {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+        }
+
+        /* Reel Screen */
+        .mock-reel-info {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .mock-clip-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .mock-clip-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            background-color: var(--black-surface);
+            border: 1px solid var(--divider-dark);
+            border-radius: 6px;
+        }
+
+        .mock-clip-thumb {
+            width: 40px;
+            height: 30px;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mock-clip-thumb svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--text-muted);
+        }
+
+        .mock-clip-name {
+            font-size: 0.7rem;
+            color: var(--text-primary);
+            flex: 1;
+        }
+
+        .mock-clip-order {
+            font-size: 0.65rem;
+            color: var(--purple-accent);
+            font-weight: 600;
+        }
+
+        /* ============================================
+           FEATURE CARDS
+           ============================================ */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background-color: var(--black-surface);
+            border: 1px solid var(--divider-dark);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--purple-accent);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background-color: rgba(153, 0, 255, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .feature-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--purple-accent);
+        }
+
+        .feature-card h3 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ============================================
+           STEP BY STEP INSTRUCTIONS
+           ============================================ */
+        .steps {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+
+        .steps li {
+            counter-increment: step-counter;
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 32px;
+            height: 32px;
+            background-color: var(--purple-accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .steps h4 {
+            margin-top: 0;
+            margin-bottom: 0.25rem;
+        }
+
+        /* ============================================
+           TIPS & NOTES
+           ============================================ */
+        .tip-box {
+            background-color: rgba(153, 0, 255, 0.08);
+            border-left: 4px solid var(--purple-accent);
+            border-radius: 0 8px 8px 0;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+        }
+
+        .tip-box strong {
+            color: var(--purple-accent);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .tip-box p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .warning-box {
+            background-color: rgba(207, 102, 121, 0.08);
+            border-left: 4px solid var(--error-color);
+            border-radius: 0 8px 8px 0;
+            padding: 1rem 1.25rem;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box strong {
+            color: var(--error-color);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .warning-box p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        /* ============================================
+           FAQ SECTION
+           ============================================ */
+        .faq-item {
+            background-color: var(--black-surface);
+            border: 1px solid var(--divider-dark);
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s ease;
+        }
+
+        .faq-question:hover {
+            background-color: var(--divider-dark);
+        }
+
+        .faq-question svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--purple-accent);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.open .faq-question svg {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 500px;
+        }
+
+        .faq-answer p {
+            padding: 0 1.25rem 1rem;
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        footer {
+            background-color: var(--black-surface);
+            border-top: 1px solid var(--divider-dark);
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            font-size: 0.85rem;
+        }
+
+        /* ============================================
+           RESPONSIVE DESIGN
+           ============================================ */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            nav ul {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                gap: 0;
+                padding-top: 1rem;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            nav a {
+                padding: 0.75rem 1rem;
+                border-top: 1px solid var(--divider-dark);
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1rem;
+            }
+
+            .toc ul {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .phone {
+                width: 280px;
+            }
+
+            .phone-content {
+                min-height: 350px;
+            }
+
+            h1 { font-size: 1.75rem; }
+            h2 { font-size: 1.4rem; }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .hero {
+                padding: 3rem 1rem;
+            }
+
+            .hero-icon {
+                width: 80px;
+                height: 80px;
+            }
+
+            .phone {
+                width: 100%;
+                border-radius: 16px;
+            }
+
+            .badge {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+
+        /* ============================================
+           ANIMATIONS
+           ============================================ */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        section {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            text-align: center;
+            padding: 1rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .scroll-indicator svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--purple-accent);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 48px;
+            height: 48px;
+            background-color: var(--purple-accent);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            box-shadow: 0 4px 12px rgba(153, 0, 255, 0.4);
+            z-index: 99;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top svg {
+            width: 24px;
+            height: 24px;
+            fill: white;
+        }
+
+        .back-to-top:hover {
+            background-color: #bb33ff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <svg viewBox="0 0 108 108" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="108" height="108" fill="#0A0A0A"/>
+                    <path d="M54,22c-8,18 -22,42 -22,58c0,12 10,22 22,22s22,-10 22,-22c0,-16 -14,-40 -22,-58zM54,78c-4,0 -7,-3 -7,-7s3,-7 7,-7s7,3 7,7s-3,7 -7,7z" fill="#9900FF"/>
+                </svg>
+                <h1>Hiraeth Flame</h1>
+            </div>
+            <button class="menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">☰</button>
+            <nav>
+                <ul id="nav-menu">
+                    <li><a href="#overview">Overview</a></li>
+                    <li><a href="#library">Library</a></li>
+                    <li><a href="#camera">Camera</a></li>
+                    <li><a href="#albums">Albums</a></li>
+                    <li><a href="#editor">Editor</a></li>
+                    <li><a href="#reel">Reel Studio</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <svg class="hero-icon" viewBox="0 0 108 108" xmlns="http://www.w3.org/2000/svg">
+                <rect width="108" height="108" fill="#0A0A0A"/>
+                <path d="M54,22c-8,18 -22,42 -22,58c0,12 10,22 22,22s22,-10 22,-22c0,-16 -14,-40 -22,-58zM54,78c-4,0 -7,-3 -7,-7s3,-7 7,-7s7,3 7,7s-3,7 -7,7z" fill="#9900FF"/>
+            </svg>
+            <h1>Hiraeth Flame</h1>
+            <p class="subtitle">Your complete media management and editing companion. Capture, organize, edit, and create stunning reels — all in one place.</p>
+            <div class="hero-badges">
+                <span class="badge">
+                    <svg viewBox="0 0 24 24"><path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/></svg>
+                    Chat & Media
+                </span>
+                <span class="badge">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    Material Design 3
+                </span>
+                <span class="badge">
+                    <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                    Secure & Private
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Table of Contents -->
+        <div class="toc">
+            <h2>📑 Table of Contents</h2>
+            <ul>
+                <li><a href="#overview"><span class="toc-number">1</span> Overview</a></li>
+                <li><a href="#getting-started"><span class="toc-number">2</span> Getting Started</a></li>
+                <li><a href="#library"><span class="toc-number">3</span> Library</a></li>
+                <li><a href="#camera"><span class="toc-number">4</span> Camera</a></li>
+                <li><a href="#albums"><span class="toc-number">5</span> Albums</a></li>
+                <li><a href="#image-editor"><span class="toc-number">6</span> Image Editor</a></li>
+                <li><a href="#video-editor"><span class="toc-number">7</span> Video Editor</a></li>
+                <li><a href="#reel"><span class="toc-number">8</span> Reel Studio</a></li>
+                <li><a href="#import"><span class="toc-number">9</span> Import Media</a></li>
+                <li><a href="#faq"><span class="toc-number">10</span> FAQ</a></li>
+            </ul>
+        </div>
+
+        <!-- Overview Section -->
+        <section id="overview">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                </div>
+                <h2>Overview</h2>
+            </div>
+            <p>Hiraeth Flame is a comprehensive media management application designed with a beautiful dark theme and purple accents. The app provides a seamless experience for managing photos, videos, and creating content.</p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M22 16V4c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2zm-11-4l2.03 2.71L16 11l4 5H8l3-4zM2 6v14c0 1.1.9 2 2 2h14v-2H4V6H2z"/></svg>
+                    </div>
+                    <h3>Media Library</h3>
+                    <p>Browse, search, and filter your photos and videos with ease. Sort by date, name, or type.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M9.4 10.5l4.77-8.26L16 4l-2 3.5V11h-4l-.6-.5zm3.15 1l.45.79L17 17.5 15 21l-4-6-.45.79L7 14.5 5 11l4-6 3.15 1.29.45.79-.45.79zM5 4v3h2V5h8v2h2V4c0-1.1-.9-2-2-2H7c-1.1 0-2 .9-2 2z"/></svg>
+                    </div>
+                    <h3>Camera</h3>
+                    <p>Capture photos and record videos directly within the app with full camera controls.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9h-4v4h-2v-4H9V9h4V5h2v4h4v2z"/></svg>
+                    </div>
+                    <h3>Albums</h3>
+                    <p>Organize your media into custom albums for better organization and quick access.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                    </div>
+                    <h3>Image Editor</h3>
+                    <p>Adjust brightness, contrast, saturation, rotate, and draw on your images.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg>
+                    </div>
+                    <h3>Video Tools</h3>
+                    <p>Trim videos by setting start and end points, then export as new files.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+                    </div>
+                    <h3>Reel Studio</h3>
+                    <p>Combine multiple clips into a single reel video with ordered sequencing.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Getting Started Section -->
+        <section id="getting-started">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                </div>
+                <h2>Getting Started</h2>
+            </div>
+
+            <ol class="steps">
+                <li>
+                    <h4>Install & Launch</h4>
+                    <p>Download and install Hiraeth Flame from the app store. Open the app to see the main interface with the bottom navigation bar.</p>
+                </li>
+                <li>
+                    <h4>Grant Permissions</h4>
+                    <p>On first launch, you'll be prompted to grant media and camera permissions. These are required for the app to access your photos, videos, and camera functionality.</p>
+                </li>
+                <li>
+                    <h4>Navigate the App</h4>
+                    <p>Use the bottom navigation bar to switch between three main sections: <strong>Library</strong>, <strong>Camera</strong>, and <strong>Albums</strong>.</p>
+                </li>
+            </ol>
+
+            <div class="tip-box">
+                <strong>💡 Tip</strong>
+                <p>The app uses a dark theme with purple accents (#9900FF) to reduce eye strain and provide a modern, elegant experience.</p>
+            </div>
+        </section>
+
+        <!-- Library Section -->
+        <section id="library">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M22 16V4c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2zm-11-4l2.03 2.71L16 11l4 5H8l3-4zM2 6v14c0 1.1.9 2 2 2h14v-2H4V6H2z"/></svg>
+                </div>
+                <h2>Library</h2>
+            </div>
+
+            <p>The Library is your central hub for viewing and managing all your media files. It features powerful filtering and sorting options.</p>
+
+            <!-- Phone Mockup: Library Screen -->
+            <div class="phone-mockup">
+                <div class="phone">
+                    <div class="phone-status-bar">
+                        <span>9:41</span>
+                        <span>📶 🔋</span>
+                    </div>
+                    <div class="phone-toolbar">
+                        <span class="title">Hiraeth Flame</span>
+                    </div>
+                    <div class="phone-content">
+                        <div class="mock-search">🔍 Search</div>
+                        <div class="mock-filters">
+                            <span class="mock-filter-btn active">All</span>
+                            <span class="mock-filter-btn">Photos</span>
+                            <span class="mock-filter-btn">Videos</span>
+                        </div>
+                        <div class="mock-input-field" style="font-size: 0.65rem;">🏷️ Tag filter</div>
+                        <div style="font-size: 0.65rem; color: var(--text-primary); margin: 6px 0 4px;">Sort</div>
+                        <div class="mock-input-field" style="font-size: 0.65rem;">Date ▼</div>
+                        <div class="mock-grid" style="margin-top: 12px;">
+                            <div class="mock-card">
+                                <div class="mock-card-thumb">
+                                    <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                                </div>
+                                <div class="mock-card-info">
+                                    <div class="mock-card-title">Sunset Photo</div>
+                                    <div class="mock-card-subtitle">Photo</div>
+                                </div>
+                            </div>
+                            <div class="mock-card">
+                                <div class="mock-card-thumb">
+                                    <svg viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg>
+                                </div>
+                                <div class="mock-card-info">
+                                    <div class="mock-card-title">Vacation Clip</div>
+                                    <div class="mock-card-subtitle">Video</div>
+                                </div>
+                            </div>
+                            <div class="mock-card">
+                                <div class="mock-card-thumb">
+                                    <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                                </div>
+                                <div class="mock-card-info">
+                                    <div class="mock-card-title">Portrait</div>
+                                    <div class="mock-card-subtitle">Photo</div>
+                                </div>
+                            </div>
+                            <div class="mock-card">
+                                <div class="mock-card-thumb">
+                                    <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                                </div>
+                                <div class="mock-card-info">
+                                    <div class="mock-card-title">Landscape</div>
+                                    <div class="mock-card-subtitle">Photo</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mock-fab">
+                            <div class="mock-fab-btn">
+                                <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="phone-bottom-nav">
+                        <div class="nav-item">
+                            <svg viewBox="0 0 24 24"><path d="M22 16V4c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2zm-11-4l2.03 2.71L16 11l4 5H8l3-4zM2 6v14c0 1.1.9 2 2 2h14v-2H4V6H2z"/></svg>
+                            Library
+                        </div>
+                        <div class="nav-item">
+                            <svg viewBox="0 0 24 24"><path d="M9.4 10.5l4.77-8.26L16 4l-2 3.5V11h-4l-.6-.5zm3.15 1l.45.79L17 17.5 15 21l-4-6-.45.79L7 14.5 5 11l4-6 3.15 1.29.45.79-.45.79z"/></svg>
+                            Camera
+                        </div>
+                        <div class="nav-item">
+                            <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9h-4v4h-2v-4H9V9h4V5h2v4h4v2z"/></svg>
+                            Albums
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="screenshot-label">Figure 1: Library Screen with search, filters, and media grid</p>
+
+            <h3>Key Features</h3>
+            <ul>
+                <li><strong>Search Bar</strong> — Quickly find media by name or metadata</li>
+                <li><strong>Type Filters</strong> — Toggle between All, Photos, and Videos</li>
+                <li><strong>Tag Filter</strong> — Filter media by custom tags</li>
+                <li><strong>Sort Options</strong> — Sort by date, name, or size</li>
+                <li><strong>Floating Action Button</strong> — Tap to import new media</li>
+            </ul>
+
+            <div class="tip-box">
+                <strong>💡 Tip</strong>
+                <p>Tap on any media item to open its detail view where you can edit metadata, add tags, and access editing tools.</p>
+            </div>
+        </section>
+
+        <!-- Camera Section -->
+        <section id="camera">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M9.4 10.5l4.77-8.26L16 4l-2 3.5V11h-4l-.6-.5zm3.15 1l.45.79L17 17.5 15 21l-4-6-.45.79L7 14.5 5 11l4-6 3.15 1.29.45.79-.45.79z"/></svg>
+                </div>
+                <h2>Camera</h2>
+            </div>
+
+            <p>Capture photos and record videos directly within the app. The camera interface provides a clean, distraction-free experience.</p>
+
+            <!-- Phone Mockup: Camera Screen -->
+            <div class="phone-mockup">
+                <div class="phone">
+                    <div class="phone-status-bar">
+                        <span>9:41</span>
+                        <span>📶 🔋</span>
+                    </div>
+                    <div class="phone-toolbar">
+                        <span class="title">Camera</span>
+                    </div>
+                    <div class="phone-content" style="padding: 12px;">
+                        <div class="mock-camera-preview">
+                            <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                        </div>
+                        <div style="font-size: 0.7rem; color: var(--purple-accent); text-align: center; margin-bottom: 12px;">Camera ready</div>
+                        <div class="mock-camera-buttons">
+                            <div class="mock-btn">📷 Photo</div>
+                            <div class="mock-btn">🎥 Record</div>
+                        </div>
+                    </div>
+                    <div class="phone-bottom-nav">
+                        <div class="nav-item">
+                            <svg viewBox="0 0 24 24"><path d="M22 16V4c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2zm-11-4l2.03 2.71L16 11l4 5H8l3-4zM2 6v14c0 1.1.9 2 2 2h14v-2H4V6H2z"/></svg>
+                            Library
+                        </div>
+                        <div class="nav-item">
+                            <svg viewBox="0 0 24 24"><path d="M9.4 10.5l4.77-8.26L16 4l-2 3.5V11h-4l-.6-.5zm3.15 1l.45.79L17 17.5 15 21l-4-6-.45.79L7 14.5 5 11l4-6 3.15 1.29.45.79-.45.79z"/></svg>
+                            Camera
+                        </div>
+                        <div class="nav-item">
+                            <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9h-4v4h-2v-4H9V9h4V5h2v4h4v2z"/></svg>
+                            Albums
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="screenshot-label">Figure 2: Camera Screen with photo and record buttons</p>
+
+            <h3>Using the Camera</h3>
+            <ol class="steps">
+                <li>
+                    <h4>Navigate to Camera</h4>
+                    <p>Tap the <strong>Camera</strong> icon in the bottom navigation bar.</p>
+                </li>
+                <li>
+                    <h4>Take a Photo</h4>
+                    <p>Tap the <strong>Photo</strong> button to capture an image. The photo will be saved to your library.</p>
+                </li>
+                <li>
+                    <h4>Record a Video</h4>
+                    <p>Tap the <strong>Record</strong> button to start recording. Tap again to stop. Videos are automatically saved.</p>
+                </li>
+            </ol>
+
+            <div class="warning-box">
+                <strong>⚠️ Permission Required</strong>
+                <p>Camera functionality requires camera permission. If you haven't granted permission, you'll see a prompt to do so.</p>
+            </div>
+        </section>
+
+        <!-- Albums Section -->
+        <section id="albums">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9h-4v4h-2v-4H9V9h4V5h2v4h4v2z"/></svg>
+                </div>
+                <h2>Albums</h2>
+            </div>
+
+            <p>Organize your media into custom albums for better organization. Create themed collections like "Vacation 2024" or "Family Photos".</p>
+
+            <!-- Phone Mockup: Albums Screen -->
+            <div class="phone-mockup">
+                <div class="phone">
+                    <div class="phone-status-bar">
+                        <span>9:41</span>
+                        <span>📶 🔋</span>
+                    </div>
+                    <div class="phone-toolbar">
+                        <span class="title">Albums</span>
+                    </div>
+                    <div class="phone-content">
+                        <div class="mock-album-grid">
+                            <div class="mock-album-card">
+                                <div class="mock-album-thumb">
+                                    <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                                </div>
+                                <div class="mock-album-name">Vacation</div>
+                                <div class="mock-album-count">24 items</div>
+                            </div>
+                            <div class="mock-album-card">
+                                <div class="mock-album-thumb">
+                                    <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                                </div>
+                                <div class="mock-album-name">Family</div>
+                                <div class="mock-album-count">56 items</div>
+                            </div>
+                            <div class="mock-album-card">
+                                <div class="mock-album-thumb">
+                                    <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                                </div>
+                                <div class="mock-album-name">Work</div>
+                                <div class="mock-album-count">12 items</div>
+                            </div>
+                            <div class="mock-album-card">
+                                <div class="mock-album-thumb">
+                                    <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                                </div>
+                                <div class="mock-album-name" style="color: var(--purple-accent);">+ New</div>
+                                <div class="mock-album-count">Create album</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="phone-bottom-nav">
+                        <div class="nav-item">
+                            <svg viewBox="0 0 24 24"><path d="M22 16V4c0-1.1-.9-2-2-2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2zm-11-4l2.03 2.71L16 11l4 5H8l3-4zM2 6v14c0 1.1.9 2 2 2h14v-2H4V6H2z"/></svg>
+                            Library
+                        </div>
+                        <div class="nav-item">
+                            <svg viewBox="0 0 24 24"><path d="M9.4 10.5l4.77-8.26L16 4l-2 3.5V11h-4l-.6-.5zm3.15 1l.45.79L17 17.5 15 21l-4-6-.45.79L7 14.5 5 11l4-6 3.15 1.29.45.79-.45.79z"/></svg>
+                            Camera
+                        </div>
+                        <div class="nav-item">
+                            <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9h-4v4h-2v-4H9V9h4V5h2v4h4v2z"/></svg>
+                            Albums
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="screenshot-label">Figure 3: Albums Screen showing organized collections</p>
+
+            <h3>Creating an Album</h3>
+            <ol class="steps">
+                <li>
+                    <h4>Open Albums Tab</h4>
+                    <p>Navigate to the <strong>Albums</strong> section using the bottom navigation.</p>
+                </li>
+                <li>
+                    <h4>Tap the FAB</h4>
+                    <p>Tap the floating action button (+) in the bottom-right corner.</p>
+                </li>
+                <li>
+                    <h4>Name Your Album</h4>
+                    <p>Enter a name for your new album and confirm.</p>
+                </li>
+                <li>
+                    <h4>Add Media</h4>
+                    <p>Go to Library, select media items, and use "Add to album" to populate your album.</p>
+                </li>
+            </ol>
+        </section>
+
+        <!-- Image Editor Section -->
+        <section id="image-editor">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+                </div>
+                <h2>Image Editor</h2>
+            </div>
+
+            <p>The built-in image editor lets you enhance your photos with professional-grade adjustments and creative tools.</p>
+
+            <!-- Phone Mockup: Image Editor Screen -->
+            <div class="phone-mockup">
+                <div class="phone">
+                    <div class="phone-status-bar">
+                        <span>9:41</span>
+                        <span>📶 🔋</span>
+                    </div>
+                    <div class="phone-toolbar">
+                        <svg class="back-icon" viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                        <span class="title">Image editor</span>
+                    </div>
+                    <div class="phone-content" style="padding: 12px;">
+                        <div class="mock-editor-preview">
+                            <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                        </div>
+                        <div class="mock-seekbar">
+                            <div class="mock-seekbar-label">Brightness</div>
+                            <div class="mock-seekbar-track">
+                                <div class="mock-seekbar-fill" style="width: 50%;"></div>
+                                <div class="mock-seekbar-thumb" style="left: 50%;"></div>
+                            </div>
+                        </div>
+                        <div class="mock-seekbar">
+                            <div class="mock-seekbar-label">Contrast</div>
+                            <div class="mock-seekbar-track">
+                                <div class="mock-seekbar-fill" style="width: 40%;"></div>
+                                <div class="mock-seekbar-thumb" style="left: 40%;"></div>
+                            </div>
+                        </div>
+                        <div class="mock-seekbar">
+                            <div class="mock-seekbar-label">Saturation</div>
+                            <div class="mock-seekbar-track">
+                                <div class="mock-seekbar-fill" style="width: 50%;"></div>
+                                <div class="mock-seekbar-thumb" style="left: 50%;"></div>
+                            </div>
+                        </div>
+                        <div class="mock-editor-buttons">
+                            <div class="mock-btn-small">🔄 Rotate 90°</div>
+                            <div class="mock-btn-small">✏️ Draw</div>
+                        </div>
+                        <div class="mock-btn" style="margin-top: 8px; font-size: 0.8rem;">Apply & save</div>
+                        <div class="mock-status">Adjustments apply when you save</div>
+                    </div>
+                </div>
+            </div>
+            <p class="screenshot-label">Figure 4: Image Editor with adjustment sliders and tools</p>
+
+            <h3>Editing Tools</h3>
+            <ul>
+                <li><strong>Brightness</strong> — Adjust the overall lightness or darkness of the image (0-120)</li>
+                <li><strong>Contrast</strong> — Control the difference between light and dark areas (0-130)</li>
+                <li><strong>Saturation</strong> — Modify the intensity of colors (0-200)</li>
+                <li><strong>Rotate 90°</strong> — Rotate the image clockwise in 90-degree increments</li>
+                <li><strong>Draw</strong> — Toggle drawing mode to sketch or annotate on your image</li>
+            </ul>
+
+            <div class="tip-box">
+                <strong>💡 Tip</strong>
+                <p>All adjustments are applied when you tap "Apply & save". You can preview changes in real-time before saving.</p>
+            </div>
+
+            <h3>How to Edit an Image</h3>
+            <ol class="steps">
+                <li>
+                    <h4>Open Media Detail</h4>
+                    <p>Tap on a photo in your Library to open its detail view.</p>
+                </li>
+                <li>
+                    <h4>Launch Editor</h4>
+                    <p>Tap the <strong>Open image editor</strong> button.</p>
+                </li>
+                <li>
+                    <h4>Adjust Settings</h4>
+                    <p>Use the sliders to adjust brightness, contrast, and saturation to your preference.</p>
+                </li>
+                <li>
+                    <h4>Apply & Save</h4>
+                    <p>Tap <strong>Apply & save</strong> to process and save the edited image.</p>
+                </li>
+            </ol>
+        </section>
+
+        <!-- Video Editor Section -->
+        <section id="video-editor">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></svg>
+                </div>
+                <h2>Video Editor</h2>
+            </div>
+
+            <p>Trim your videos by setting precise start and end points as percentages of the total duration. Export trimmed clips as new files.</p>
+
+            <!-- Phone Mockup: Video Editor Screen -->
+            <div class="phone-mockup">
+                <div class="phone">
+                    <div class="phone-status-bar">
+                        <span>9:41</span>
+                        <span>📶 🔋</span>
+                    </div>
+                    <div class="phone-toolbar">
+                        <svg class="back-icon" viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                        <span class="title">Video tools</span>
+                    </div>
+                    <div class="phone-content" style="padding: 12px;">
+                        <div class="mock-editor-preview" style="height: 120px;">
+                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
+                        <div style="font-size: 0.65rem; color: var(--text-muted); margin-bottom: 12px;">Trim: start and end as % of duration (export creates new clip, video track only).</div>
+                        <div class="mock-seekbar">
+                            <div class="mock-seekbar-label">Start %</div>
+                            <div class="mock-seekbar-track">
+                                <div class="mock-seekbar-fill" style="width: 80%; margin-left: 20%;"></div>
+                                <div class="mock-seekbar-thumb" style="left: 20%;"></div>
+                            </div>
+                        </div>
+                        <div class="mock-seekbar">
+                            <div class="mock-seekbar-label">End %</div>
+                            <div class="mock-seekbar-track">
+                                <div class="mock-seekbar-fill" style="width: 80%;"></div>
+                                <div class="mock-seekbar-thumb" style="left: 80%;"></div>
+                            </div>
+                        </div>
+                        <div class="mock-btn" style="margin-top: 16px; font-size: 0.8rem;">Export trim as new file</div>
+                        <div class="mock-status"></div>
+                    </div>
+                </div>
+            </div>
+            <p class="screenshot-label">Figure 5: Video Editor with trim controls</p>
+
+            <h3>Trimming a Video</h3>
+            <ol class="steps">
+                <li>
+                    <h4>Select a Video</h4>
+                    <p>Open a video from your Library to access its detail view.</p>
+                </li>
+                <li>
+                    <h4>Open Video Tools</h4>
+                    <p>Tap the <strong>Trim / video tools</strong> button.</p>
+                </li>
+                <li>
+                    <h4>Set Start Point</h4>
+                    <p>Use the <strong>Start %</strong> slider to set where the trimmed video begins (0-100%).</p>
+                </li>
+                <li>
+                    <h4>Set End Point</h4>
+                    <p>Use the <strong>End %</strong> slider to set where the trimmed video ends.</p>
+                </li>
+                <li>
+                    <h4>Export</h4>
+                    <p>Tap <strong>Export trim as new file</strong> to create a new video file with your selected segment.</p>
+                </li>
+            </ol>
+
+            <div class="tip-box">
+                <strong>💡 Tip</strong>
+                <p>The trim operation only processes the video track. The original video remains unchanged — a new file is created.</p>
+            </div>
+        </section>
+
+        <!-- Reel Studio Section -->
+        <section id="reel">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M10 16.5l6-4.5-6-4.5v9zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+                </div>
+                <h2>Reel Studio</h2>
+            </div>
+
+            <p>Create engaging reel videos by combining multiple clips in your desired order. The Reel Studio lets you stage clips and merge them into a single MP4 file.</p>
+
+            <!-- Phone Mockup: Reel Studio Screen -->
+            <div class="phone-mockup">
+                <div class="phone">
+                    <div class="phone-status-bar">
+                        <span>9:41</span>
+                        <span>📶 🔋</span>
+                    </div>
+                    <div class="phone-toolbar">
+                        <svg class="back-icon" viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                        <span class="title">Reel studio</span>
+                    </div>
+                    <div class="phone-content" style="padding: 12px;">
+                        <div class="mock-reel-info">Tap clips to select order. Stage copies to reels folder; merge with Media3 Transformer for one MP4.</div>
+                        <div class="mock-btn" style="font-size: 0.8rem; margin-bottom: 4px;">Stage reel (ordered copies)</div>
+                        <div style="font-size: 0.7rem; color: var(--text-muted); margin-bottom: 8px;">Clear selection</div>
+                        <div class="mock-status" style="margin-bottom: 8px;">0 clips selected</div>
+                        <div class="mock-clip-list">
+                            <div class="mock-clip-item">
+                                <div class="mock-clip-thumb">
+                                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                                <div class="mock-clip-name">Clip 1.mp4</div>
+                                <div class="mock-clip-order">#1</div>
+                            </div>
+                            <div class="mock-clip-item">
+                                <div class="mock-clip-thumb">
+                                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                                <div class="mock-clip-name">Clip 2.mp4</div>
+                                <div class="mock-clip-order">#2</div>
+                            </div>
+                            <div class="mock-clip-item">
+                                <div class="mock-clip-thumb">
+                                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                                <div class="mock-clip-name">Clip 3.mp4</div>
+                                <div class="mock-clip-order">#3</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="screenshot-label">Figure 6: Reel Studio with clip ordering interface</p>
+
+            <h3>Creating a Reel</h3>
+            <ol class="steps">
+                <li>
+                    <h4>Access Reel Studio</h4>
+                    <p>Navigate to Reel Studio from the app's main navigation or media actions.</p>
+                </li>
+                <li>
+                    <h4>Select Clips</h4>
+                    <p>Tap on clips in your library to select them. The order in which you tap determines the sequence.</p>
+                </li>
+                <li>
+                    <h4>Stage the Reel</h4>
+                    <p>Tap <strong>Stage reel (ordered copies)</strong> to prepare the clips for merging.</p>
+                </li>
+                <li>
+                    <h4>Merge & Export</h4>
+                    <p>The app will merge the staged clips into a single MP4 file using Media3 Transformer.</p>
+                </li>
+            </ol>
+
+            <div class="tip-box">
+                <strong>💡 Tip</strong>
+                <p>Use <strong>Clear selection</strong> to reset your clip order and start over if needed.</p>
+            </div>
+        </section>
+
+        <!-- Import Section -->
+        <section id="import">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z"/></svg>
+                </div>
+                <h2>Import Media</h2>
+            </div>
+
+            <p>Bring external photos and videos into your Hiraeth Flame library. You can import from your device's file system or other sources.</p>
+
+            <!-- Phone Mockup: Import Screen -->
+            <div class="phone-mockup">
+                <div class="phone">
+                    <div class="phone-status-bar">
+                        <span>9:41</span>
+                        <span>📶 🔋</span>
+                    </div>
+                    <div class="phone-toolbar">
+                        <svg class="back-icon" viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                        <span class="title">Import</span>
+                    </div>
+                    <div class="phone-content" style="padding: 12px;">
+                        <div class="mock-btn" style="font-size: 0.8rem;">Choose image or video</div>
+                        <div class="mock-editor-preview" style="margin-top: 12px;">
+                            <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                        </div>
+                        <div class="mock-input-field" style="margin-top: 12px; font-size: 0.7rem;">📄 Title / filename</div>
+                        <div class="mock-status">No file selected</div>
+                        <div class="mock-btn" style="margin-top: 12px; font-size: 0.8rem;">Save to library</div>
+                    </div>
+                </div>
+            </div>
+            <p class="screenshot-label">Figure 7: Import Screen for adding external media</p>
+
+            <h3>Importing Media</h3>
+            <ol class="steps">
+                <li>
+                    <h4>Tap Import Button</h4>
+                    <p>From the Library screen, tap the floating action button (+) and select Import.</p>
+                </li>
+                <li>
+                    <h4>Choose File</h4>
+                    <p>Tap <strong>Choose image or video</strong> to open the file picker and select your media.</p>
+                </li>
+                <li>
+                    <h4>Preview & Rename</h4>
+                    <p>Preview the selected media and optionally give it a custom title/filename.</p>
+                </li>
+                <li>
+                    <h4>Save to Library</h4>
+                    <p>Tap <strong>Save to library</strong> to import the media into your collection.</p>
+                </li>
+            </ol>
+        </section>
+
+        <!-- Media Detail Section -->
+        <section id="media-detail">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+                </div>
+                <h2>Media Details</h2>
+            </div>
+
+            <p>Every media item has a detailed view where you can view, edit metadata, and access editing tools.</p>
+
+            <!-- Phone Mockup: Media Detail Screen -->
+            <div class="phone-mockup">
+                <div class="phone">
+                    <div class="phone-status-bar">
+                        <span>9:41</span>
+                        <span>📶 🔋</span>
+                    </div>
+                    <div class="phone-toolbar">
+                        <svg class="back-icon" viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                        <span class="title">Details</span>
+                    </div>
+                    <div class="phone-content" style="padding: 12px;">
+                        <div class="mock-detail-preview">
+                            <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                        </div>
+                        <div class="mock-input-label">Title</div>
+                        <div class="mock-input-field" style="font-size: 0.7rem;">Sunset Photo</div>
+                        <div class="mock-input-label">Description</div>
+                        <div class="mock-input-field" style="font-size: 0.7rem; min-height: 36px;">Beautiful sunset at the beach</div>
+                        <div class="mock-input-label">Tags (comma-separated)</div>
+                        <div class="mock-input-field" style="font-size: 0.7rem;">nature, sunset, beach</div>
+                        <div class="mock-input-label">Created (epoch ms)</div>
+                        <div class="mock-input-field" style="font-size: 0.7rem;">1704067200000</div>
+                        <div class="mock-btn" style="margin-top: 8px; font-size: 0.75rem;">Save metadata</div>
+                        <div class="mock-btn-secondary" style="margin-top: 6px; padding: 10px; background: var(--black-surface); border: 1px solid var(--divider-dark); border-radius: 8px; color: var(--text-primary); font-size: 0.75rem; text-align: center;">Open image editor</div>
+                        <div class="mock-btn-secondary" style="margin-top: 6px; padding: 10px; background: var(--black-surface); border: 1px solid var(--divider-dark); border-radius: 8px; color: var(--text-primary); font-size: 0.75rem; text-align: center;">Add to album</div>
+                    </div>
+                </div>
+            </div>
+            <p class="screenshot-label">Figure 8: Media Detail Screen with metadata editing</p>
+
+            <h3>Detail View Features</h3>
+            <ul>
+                <li><strong>Media Preview</strong> — View the full image or play the video</li>
+                <li><strong>Title</strong> — Edit the display name of the media</li>
+                <li><strong>Description</strong> — Add a longer description or notes</li>
+                <li><strong>Tags</strong> — Add comma-separated tags for better organization</li>
+                <li><strong>Created Timestamp</strong> — View or edit the creation date</li>
+                <li><strong>Quick Actions</strong> — Access image/video editors and album management</li>
+            </ul>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq">
+            <div class="section-header">
+                <div class="section-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7l-.93.93c-.51.51-.79 1.19-.79 1.9v.17h-2v-.17c0-1.27.51-2.45 1.41-3.35l.93-.93c.38-.38.59-.89.59-1.43 0-1.1-.9-2-2-2s-2 .9-2 2H6c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .54-.21 1.05-.59 1.43z"/></svg>
+                </div>
+                <h2>Frequently Asked Questions</h2>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <button class="faq-question">
+                    How do I grant camera and media permissions?
+                    <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Go to your device's Settings → Apps → Hiraeth Flame → Permissions. Enable Camera and Media/Storage permissions. Alternatively, tap the "Grant media & camera permissions" button in the Library screen if visible.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <button class="faq-question">
+                    Can I edit videos after trimming them?
+                    <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes! Trimmed videos are saved as new files in your library. You can open them and apply the video trim tool again for further adjustments.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <button class="faq-question">
+                    What formats are supported for import?
+                    <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Hiraeth Flame supports common image formats (JPEG, PNG, WebP) and video formats (MP4, MOV, AVI). The app uses Android's MediaStore for broad compatibility.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <button class="faq-question">
+                    How do I create a reel from multiple videos?
+                    <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Navigate to Reel Studio, tap clips in your desired order, then tap "Stage reel (ordered copies)". The app will merge the clips into a single MP4 file using Media3 Transformer.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <button class="faq-question">
+                    Are my photos and videos stored securely?
+                    <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes. Hiraeth Flame stores media in your device's local storage with standard Android security. The app doesn't upload your media to any external servers. All processing is done locally on your device.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <button class="faq-question">
+                    Can I undo changes made in the image editor?
+                    <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p>The image editor applies changes only when you tap "Apply & save". Until then, you can adjust sliders freely. After saving, the original file is preserved and a new edited version is created, so your original remains intact.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <button class="faq-question">
+                    How do I delete media from my library?
+                    <svg viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
+                </button>
+                <div class="faq-answer">
+                    <p>Open the media item's detail view and scroll down to find the "Delete from library" button at the bottom. Confirm the deletion. Note: This permanently removes the file from your device.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#overview">Overview</a>
+                <a href="#getting-started">Getting Started</a>
+                <a href="#faq">FAQ</a>
+            </div>
+            <p>© 2024 Hiraeth Flame. All rights reserved.</p>
+            <p style="margin-top: 0.5rem;">Built with Material Design 3 • Dark Theme</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()" aria-label="Back to top">
+        <svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
+    </button>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMenu() {
+            const nav = document.getElementById('nav-menu');
+            nav.classList.toggle('active');
+        }
+
+        // FAQ accordion toggle
+        function toggleFaq(element) {
+            element.classList.toggle('open');
+        }
+
+        // Back to top button visibility
+        window.addEventListener('scroll', function() {
+            const backToTop = document.getElementById('backToTop');
+            if (window.scrollY > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        // Scroll to top
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                    // Close mobile menu if open
+                    document.getElementById('nav-menu').classList.remove('active');
+                }
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const nav = document.getElementById('nav-menu');
+            const toggle = document.querySelector('.menu-toggle');
+            if (!nav.contains(e.target) && !toggle.contains(e.target)) {
+                nav.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
