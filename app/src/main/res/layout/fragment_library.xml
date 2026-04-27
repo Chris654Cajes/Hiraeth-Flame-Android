@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black_primary">
+    android:background="@color/cyberpunk_dark">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/black_surface"
+            android:background="@color/cyberpunk_surface"
             app:title="@string/app_name"
             app:titleTextColor="@color/text_primary" />
 
@@ -51,14 +51,14 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/filter_all"
-                        style="@style/Widget.Material3.Button.TonalButton"
+                        style="@style/CyberpunkTonalButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="All" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/filter_photos"
-                        style="@style/Widget.Material3.Button.TonalButton"
+                        style="@style/CyberpunkTonalButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -66,7 +66,7 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/filter_videos"
-                        style="@style/Widget.Material3.Button.TonalButton"
+                        style="@style/CyberpunkTonalButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -88,12 +88,20 @@
                         android:maxLines="1" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Sort"
-                    android:textColor="@color/text_primary" />
+                    android:hint="Sort Options"
+                    style="@style/CyberpunkTextInput">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sort"
+                        android:textColor="@color/purple_accent" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <Spinner
                     android:id="@+id/sort_spinner"
@@ -103,6 +111,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_grant_permissions"
+                    style="@style/CyberpunkTonalButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -114,20 +123,34 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
             android:layout_weight="1"
             android:clipToPadding="false"
             android:paddingBottom="72dp" />
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/fab_import"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:contentDescription="Import"
-        app:backgroundTint="@color/purple_accent"
-        app:srcCompat="@android:drawable/ic_input_add"
-        app:tint="@android:color/white" />
+        android:padding="0dp"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.MaterialComponents.SmallComponent"
+        app:backgroundTint="@android:color/transparent"
+        app:strokeWidth="2dp"
+        app:strokeColor="@color/purple_accent"
+        app:elevation="0dp"
+        app:icon="@android:drawable/ic_input_add"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:iconTint="@color/purple_accent" />
+
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

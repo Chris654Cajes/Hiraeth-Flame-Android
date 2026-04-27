@@ -3,24 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black_primary"
+    android:background="@color/cyberpunk_dark"
     android:orientation="vertical">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/black_surface"
+        android:background="@color/cyberpunk_surface"
         app:title="@string/nav_camera"
         app:titleTextColor="@color/text_primary" />
 
-    <TextView
-        android:id="@+id/camera_message"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="8dp"
-        android:textColor="@color/purple_accent" />
+        android:hint="Camera Status Message"
+        style="@style/CyberpunkTextInput">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/camera_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="8dp"
+            android:textColor="@color/purple_accent" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.camera.view.PreviewView
         android:id="@+id/preview_view"

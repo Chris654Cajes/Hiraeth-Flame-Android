@@ -61,17 +61,13 @@ class AlbumsFragment : Fragment() {
     }
 
     private fun showCreateAlbumDialog() {
-        val inputName = TextInputEditText(requireContext()).apply { hint = "Album name" }
-        val inputCat = TextInputEditText(requireContext()).apply { hint = "Category" }
-        val layout = android.widget.LinearLayout(requireContext()).apply {
-            orientation = android.widget.LinearLayout.VERTICAL
-            setPadding(48, 32, 48, 0)
-            addView(inputName)
-            addView(inputCat)
-        }
-        MaterialAlertDialogBuilder(requireContext())
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_new_album, null)
+        val inputName = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.album_name_input)
+        val inputCat = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.category_input)
+        
+        val dialog = MaterialAlertDialogBuilder(requireContext())
             .setTitle("New album")
-            .setView(layout)
+            .setView(dialogView)
             .setPositiveButton("Create") { _, _ ->
                 val name = inputName.text?.toString().orEmpty()
                 val cat = inputCat.text?.toString().orEmpty()
@@ -80,7 +76,27 @@ class AlbumsFragment : Fragment() {
                 }
             }
             .setNegativeButton(android.R.string.cancel, null)
-            .show()
+            .create()
+        
+        dialog.show()
+        
+        // Reduce title margin bottom
+        val titleView = dialog.findViewById<View>(resources.getIdentifier("alertTitle", "id", "android"))
+        titleView?.let {
+            (it.layoutParams as? ViewGroup.MarginLayoutParams)?.let { params ->
+                params.setMargins(params.leftMargin, params.topMargin, params.rightMargin, 8)
+                it.layoutParams = params
+            }
+        }
+        
+        // Reduce button margin top
+        val buttonPanel = dialog.findViewById<View>(resources.getIdentifier("buttonPanel", "id", "android"))
+        buttonPanel?.let {
+            (it.layoutParams as? ViewGroup.MarginLayoutParams)?.let { params ->
+                params.setMargins(params.leftMargin, 8, params.rightMargin, params.bottomMargin)
+                it.layoutParams = params
+            }
+        }
     }
 
     override fun onDestroyView() {

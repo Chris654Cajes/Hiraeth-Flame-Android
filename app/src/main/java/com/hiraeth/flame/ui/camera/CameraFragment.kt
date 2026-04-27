@@ -82,7 +82,7 @@ class CameraFragment : Fragment() {
                     }
                 }
                 launch {
-                    viewModel.lastMessage.collect { binding.cameraMessage.text = it.orEmpty() }
+                    viewModel.lastMessage.collect { binding.cameraMessage.setText(it.orEmpty()) }
                 }
             }
         }
