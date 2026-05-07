@@ -1,43 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/bg_card"
     android:orientation="vertical"
     android:padding="24dp">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="New Album"
+        android:textColor="@color/text_primary"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:letterSpacing="0.04" />
+
+    <!-- Name -->
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInput.Neon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:hint="Album Name"
-        app:boxBackgroundMode="outline">
+        android:hint="Album name">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/album_name_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="1" />
-
+            android:maxLines="1"
+            android:textColor="@color/text_primary" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Category -->
     <com.google.android.material.textfield.TextInputLayout
+        style="@style/TextInput.Neon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:hint="Category"
-        app:boxBackgroundMode="outline">
+        android:hint="Category">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/category_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="1" />
-
+            android:maxLines="1"
+            android:textColor="@color/text_primary" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </LinearLayout>

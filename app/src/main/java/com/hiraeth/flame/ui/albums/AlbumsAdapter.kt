@@ -4,7 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import coil.load
 import com.hiraeth.flame.data.db.AlbumWithMedia
 import com.hiraeth.flame.databinding.ItemAlbumBinding
@@ -13,13 +14,15 @@ import com.hiraeth.flame.di.AppContainer
 class AlbumsAdapter(
     private val container: AppContainer,
     private val onMediaClick: (Long) -> Unit,
-) : RecyclerView.Adapter<AlbumsAdapter.VH>() {
+) : ListAdapter<AlbumWithMedia, AlbumsAdapter.VH>(DIFF) {
 
-    private var items: List<AlbumWithMedia> = emptyList()
-
-    fun submitList(list: List<AlbumWithMedia>) {
-        items = list
-        notifyDataSetChanged()
+    companion object {
+        private val DIFF = object : DiffUtil.ItemCallback<AlbumWithMedia>() {
+            override fun areItemsTheSame(old: AlbumWithMedia, new: AlbumWithMedia) =
+                old.album.id == new.album.id
+            override fun areContentsTheSame(old: AlbumWithMedia, new: AlbumWithMedia) =
+                old == new
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
@@ -28,28 +31,33 @@ class AlbumsAdapter(
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        val row = items[position]
+        val row = getItem(position)
         val binding = holder.binding
         binding.albumName.text = row.album.name
-        binding.albumCategory.text = "Category: ${row.album.category}"
-        binding.albumCount.text = "${row.media.size} item(s)"
+        binding.albumCategory.text = row.album.category
+        val count = row.media.size
+        binding.albumCount.text = if (count == 1) "1 item" else "$count items"
 
         binding.thumbRow.removeAllViews()
         val d = holder.itemView.resources.displayMetrics.density
-        val side = (64 * d).toInt()
+        val side = (68 * d).toInt()
+        val cornerPx = (8 * d).toInt()
         val margin = (6 * d).toInt()
-        for (m in row.media.take(4)) {
+        for (m in row.media.take(5)) {
             val iv = ImageView(holder.itemView.context).apply {
                 layoutParams = LinearLayout.LayoutParams(side, side).apply { marginEnd = margin }
                 scaleType = ImageView.ScaleType.CENTER_CROP
+                clipToOutline = true
+                outlineProvider = android.view.ViewOutlineProvider.BACKGROUND
+                val bg = android.graphics.drawable.GradientDrawable()
+                bg.cornerRadius = cornerPx.toFloat()
+                background = bg
             }
-            iv.load(container.mediaStorage.resolveRelative(m.relativePath)) { crossfade(true) }
+            iv.load(container.mediaStorage.resolveRelative(m.relativePath)) { crossfade(200) }
             iv.setOnClickListener { onMediaClick(m.id) }
             binding.thumbRow.addView(iv)
         }
     }
 
-    override fun getItemCount(): Int = items.size
-
-    class VH(val binding: ItemAlbumBinding) : RecyclerView.ViewHolder(binding.root)
+    class VH(val binding: ItemAlbumBinding) : androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root)
 }

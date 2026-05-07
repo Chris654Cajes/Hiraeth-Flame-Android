@@ -13,7 +13,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.hiraeth.flame.R
 import com.hiraeth.flame.databinding.FragmentReelBinding
 import kotlinx.coroutines.launch
@@ -55,7 +55,7 @@ class ReelStudioFragment : Fragment() {
                 )
             },
         )
-        binding.recycler.layoutManager = GridLayoutManager(requireContext(), 2)
+        binding.recycler.layoutManager = LinearLayoutManager(requireContext())
         binding.recycler.adapter = adapter
 
         binding.btnStage.setOnClickListener { viewModel.stageReelProject() }

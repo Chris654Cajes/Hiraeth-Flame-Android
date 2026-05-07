@@ -14,7 +14,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.textfield.TextInputEditText
 import com.hiraeth.flame.R
 import com.hiraeth.flame.databinding.FragmentAlbumsBinding
 import kotlinx.coroutines.launch
@@ -24,7 +23,8 @@ class AlbumsFragment : Fragment() {
     private var _binding: FragmentAlbumsBinding? = null
     private val binding get() = _binding!!
 
-    private val container get() = (requireActivity().application as com.hiraeth.flame.HiraethApplication).container
+    private val container get() =
+        (requireActivity().application as com.hiraeth.flame.HiraethApplication).container
 
     private val viewModel: AlbumsViewModel by viewModels {
         AlbumsViewModel.factory(container.albumRepository)
@@ -32,7 +32,9 @@ class AlbumsFragment : Fragment() {
 
     private lateinit var adapter: AlbumsAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?,
+    ): View {
         _binding = FragmentAlbumsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -61,42 +63,26 @@ class AlbumsFragment : Fragment() {
     }
 
     private fun showCreateAlbumDialog() {
-        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_new_album, null)
-        val inputName = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.album_name_input)
-        val inputCat = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.category_input)
-        
-        val dialog = MaterialAlertDialogBuilder(requireContext())
-            .setTitle("New album")
+        val dialogView = LayoutInflater.from(requireContext())
+            .inflate(R.layout.dialog_new_album, null)
+        val inputName = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(
+            R.id.album_name_input,
+        )
+        val inputCat = dialogView.findViewById<com.google.android.material.textfield.TextInputEditText>(
+            R.id.category_input,
+        )
+
+        MaterialAlertDialogBuilder(requireContext())
             .setView(dialogView)
             .setPositiveButton("Create") { _, _ ->
-                val name = inputName.text?.toString().orEmpty()
-                val cat = inputCat.text?.toString().orEmpty()
+                val name = inputName.text?.toString().orEmpty().trim()
+                val cat = inputCat.text?.toString().orEmpty().trim()
                 if (name.isNotBlank()) {
                     viewModel.createAlbum(name, cat.ifBlank { "General" })
                 }
             }
             .setNegativeButton(android.R.string.cancel, null)
-            .create()
-        
-        dialog.show()
-        
-        // Reduce title margin bottom
-        val titleView = dialog.findViewById<View>(resources.getIdentifier("alertTitle", "id", "android"))
-        titleView?.let {
-            (it.layoutParams as? ViewGroup.MarginLayoutParams)?.let { params ->
-                params.setMargins(params.leftMargin, params.topMargin, params.rightMargin, 8)
-                it.layoutParams = params
-            }
-        }
-        
-        // Reduce button margin top
-        val buttonPanel = dialog.findViewById<View>(resources.getIdentifier("buttonPanel", "id", "android"))
-        buttonPanel?.let {
-            (it.layoutParams as? ViewGroup.MarginLayoutParams)?.let { params ->
-                params.setMargins(params.leftMargin, 8, params.rightMargin, params.bottomMargin)
-                it.layoutParams = params
-            }
-        }
+            .show()
     }
 
     override fun onDestroyView() {

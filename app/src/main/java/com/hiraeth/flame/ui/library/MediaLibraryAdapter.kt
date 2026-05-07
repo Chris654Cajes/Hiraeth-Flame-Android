@@ -2,6 +2,8 @@ package com.hiraeth.flame.ui.library
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.hiraeth.flame.data.db.MediaEntity
@@ -13,13 +15,16 @@ class MediaLibraryAdapter(
     private val container: AppContainer,
     private var gridMode: Boolean,
     private val onItemClick: (Long) -> Unit,
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    private var items: List<MediaEntity> = emptyList()
+) : ListAdapter<MediaEntity, RecyclerView.ViewHolder>(DIFF) {
 
     companion object {
         private const val TYPE_GRID = 0
         private const val TYPE_LIST = 1
+
+        private val DIFF = object : DiffUtil.ItemCallback<MediaEntity>() {
+            override fun areItemsTheSame(old: MediaEntity, new: MediaEntity) = old.id == new.id
+            override fun areContentsTheSame(old: MediaEntity, new: MediaEntity) = old == new
+        }
     }
 
     fun setGridMode(grid: Boolean) {
@@ -29,11 +34,7 @@ class MediaLibraryAdapter(
         }
     }
 
-    fun submitList(list: List<MediaEntity>) {
-        items = list
-        notifyDataSetChanged()
-    }
-
+    
     override fun getItemViewType(position: Int): Int =
         if (gridMode) TYPE_GRID else TYPE_LIST
 
@@ -47,26 +48,25 @@ class MediaLibraryAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val item = items[position]
+        val item = getItem(position)
         val file = container.mediaStorage.resolveRelative(item.relativePath)
         when (holder) {
             is GridVH -> {
-                holder.binding.thumbnail.load(file) { crossfade(true) }
+                holder.binding.thumbnail.load(file) { crossfade(300) }
                 holder.binding.title.text = item.displayName
-                holder.binding.subtitle.text = if (item.isVideo) "Video" else "Photo"
+                holder.binding.subtitle.text = if (item.isVideo) "VIDEO" else "PHOTO"
                 holder.itemView.setOnClickListener { onItemClick(item.id) }
             }
             is ListVH -> {
-                holder.binding.thumbnail.load(file) { crossfade(true) }
+                holder.binding.thumbnail.load(file) { crossfade(300) }
                 holder.binding.title.text = item.displayName
+                val sizeKb = item.sizeBytes / 1024
                 holder.binding.subtitle.text =
-                    if (item.isVideo) "Video · ${item.sizeBytes / 1024} KB" else "Photo · ${item.sizeBytes / 1024} KB"
+                    if (item.isVideo) "Video · $sizeKb KB" else "Photo · $sizeKb KB"
                 holder.itemView.setOnClickListener { onItemClick(item.id) }
             }
         }
     }
-
-    override fun getItemCount(): Int = items.size
 
     class GridVH(val binding: ItemMediaGridBinding) : RecyclerView.ViewHolder(binding.root)
     class ListVH(val binding: ItemMediaListBinding) : RecyclerView.ViewHolder(binding.root)

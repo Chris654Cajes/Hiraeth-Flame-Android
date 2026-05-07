@@ -1,6 +1,5 @@
 package com.hiraeth.flame.ui.reel
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -34,11 +33,16 @@ class ReelClipsAdapter(
         val file = container.mediaStorage.resolveRelative(item.relativePath)
         holder.binding.thumbnail.load(file) { crossfade(true) }
         holder.binding.title.text = item.displayName
+        holder.binding.subtitle.text = if (item.isVideo) "Video · ${item.sizeBytes / 1024} KB" else "Photo · ${item.sizeBytes / 1024} KB"
         val sel = selectedIds().contains(item.id)
         val card = holder.binding.root as MaterialCardView
-        val d = holder.itemView.resources.displayMetrics.density
-        card.strokeWidth = ((if (sel) 4 else 1) * d).toInt()
-        card.strokeColor = Color.parseColor("#9900FF")
+        val ctx = holder.itemView.context
+        val d = ctx.resources.displayMetrics.density
+        card.strokeWidth = ((if (sel) 3 else 1) * d).toInt()
+        card.strokeColor = if (sel)
+            ctx.getColor(com.hiraeth.flame.R.color.neon_violet)
+        else
+            ctx.getColor(com.hiraeth.flame.R.color.border_subtle)
         holder.itemView.setOnClickListener { onToggle(item.id) }
         holder.binding.btnOpen.setOnClickListener { onOpen(item.id) }
     }

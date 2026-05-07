@@ -2,13 +2,13 @@ package com.hiraeth.flame.ui.editor
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PathMeasure
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import com.hiraeth.flame.R
 /**
  * Simple freehand overlay for [ImageEditorFragment]. Paths are snapshotted for [ImageEditorViewModel.export].
  */
@@ -22,12 +22,13 @@ class DrawingOverlayView @JvmOverloads constructor(
 
     private val strokes = mutableListOf<Stroke>()
     private var current: Path? = null
+    private val neonViolet get() = context.getColor(R.color.neon_violet)
+
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
-        strokeWidth = 12f
+        strokeWidth = 10f
         strokeCap = Paint.Cap.ROUND
         strokeJoin = Paint.Join.ROUND
-        color = Color.parseColor("#9900FF")
     }
 
     var drawingEnabled: Boolean = false
@@ -46,7 +47,7 @@ class DrawingOverlayView @JvmOverloads constructor(
             canvas.drawPath(s.path, paint)
         }
         current?.let {
-            paint.color = Color.parseColor("#9900FF")
+            paint.color = neonViolet
             canvas.drawPath(it, paint)
         }
     }
@@ -65,7 +66,7 @@ class DrawingOverlayView @JvmOverloads constructor(
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 current?.let { p ->
                     if (pathLength(p) > 8f) {
-                        strokes.add(Stroke(Color.parseColor("#9900FF"), Path(p)))
+                        strokes.add(Stroke(neonViolet, Path(p)))
                     }
                 }
                 current = null

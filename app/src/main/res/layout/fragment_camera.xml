@@ -1,60 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cyberpunk_dark"
-    android:orientation="vertical">
+    android:background="@color/bg_abyss">
 
+    <!-- Toolbar -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/cyberpunk_surface"
+        android:background="@drawable/bg_toolbar"
         app:title="@string/nav_camera"
-        app:titleTextColor="@color/text_primary" />
+        app:titleTextColor="@color/text_primary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
+    <!-- Status message (read-only, shows over preview) -->
+    <TextView
+        android:id="@+id/camera_message"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Camera Status Message"
-        style="@style/CyberpunkTextInput">
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:textColor="@color/neon_cyan"
+        android:textSize="13sp"
+        android:alpha="0.85"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/camera_message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="8dp"
-            android:textColor="@color/purple_accent" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
+    <!-- Camera Preview - takes full remaining space -->
     <androidx.camera.view.PreviewView
         android:id="@+id/preview_view"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        app:layout_constraintBottom_toTopOf="@id/camera_controls"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/camera_message" />
 
+    <!-- Camera controls bar -->
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/camera_controls"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/bg_abyss"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_photo"
+            style="@style/Btn.Neon"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="52dp"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
-            android:text="Photo" />
+            android:text="Photo"
+            android:textColor="@color/neon_violet" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_record"
+            style="@style/Btn.Neon"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="52dp"
             android:layout_weight="1"
-            android:text="Record" />
+            android:text="Record"
+            android:textColor="@color/neon_magenta"
+            app:strokeColor="@color/neon_magenta" />
     </LinearLayout>
-</LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

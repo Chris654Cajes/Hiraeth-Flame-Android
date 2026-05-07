@@ -1,52 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black_primary">
+    android:background="@color/bg_deep">
 
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_toolbar"
+        app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/black_surface"
+            android:background="@android:color/transparent"
             app:title="@string/nav_albums"
             app:titleTextColor="@color/text_primary" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:padding="8dp"
-            android:paddingBottom="88dp" />
-    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:padding="12dp"
+        android:paddingBottom="100dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <com.google.android.material.button.MaterialButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_new_album"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:padding="0dp"
-        android:insetLeft="0dp"
-        android:insetTop="0dp"
-        android:insetRight="0dp"
-        android:insetBottom="0dp"
-        app:shapeAppearanceOverlay="@style/ShapeAppearance.MaterialComponents.SmallComponent"
-        app:backgroundTint="@android:color/transparent"
-        app:strokeWidth="2dp"
-        app:strokeColor="@color/purple_accent"
-        app:elevation="0dp"
-        app:icon="@android:drawable/ic_input_add"
-        app:iconGravity="textStart"
-        app:iconPadding="0dp"
-        app:iconTint="@color/purple_accent" />
+        android:layout_margin="@dimen/fab_margin"
+        android:contentDescription="New album"
+        android:src="@android:drawable/ic_input_add"
+        app:backgroundTint="@color/bg_card"
+        app:borderWidth="0dp"
+        app:elevation="4dp"
+        app:maxImageSize="28dp"
+        app:tint="@color/neon_cyan" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
